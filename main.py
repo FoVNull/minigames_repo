@@ -79,10 +79,10 @@ async def main():
                         # Reset the position of the target for the next round
                         target_width -= 12
                         cursor_speed += 6
-                        target_x = random.randint(target_image_rect.width, width - target_image_rect.width)
+                        target_x = random.randint(target_image_rect.width-25, width - target_image_rect.width)
                 else:
                     cursor_movable = False  # Prevent the cursor from moving
-                    text_fail = font.render("Game Over! Tap to restart.", True, black)
+                    text_fail = font.render("Tap to start.", True, black)
             else:
                 text_fail = None
                 text_success = None
