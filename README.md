@@ -1,15 +1,17 @@
 # Theme
-简而言之：  
-![](img/theme.gif)
+准备几个小游戏，在会场中扫码就可以玩。  
+省booth空间，贴几个二维码就行，不用手工做游戏相关的材料，批量生产 😋
 
-# Design
-看准时机收下红包
-![](img/rule1.png)
-三次推让 （位置刷新，移速递增，目标区域减小）   
-三次均成功完成任务
-![](img/rule2.png)
+# [猜字谜](./quiz/)
+
+<img src=qrcode_fovnull.itch.io_quiz.png  width=200>
+
+# [抢红包](./red_envelope/)
+<img src=qrcode_fovnull.itch.io_red.png  width=200>
 
 # Reference
+Code with ![](https://img.shields.io/badge/chatGPT-74aa9c?logo=openai&logoColor=white)
+- Chinese font: [Noto+Sans+SC](https://fonts.google.com/noto/specimen/Noto+Sans+SC)
 - Web assembley by pygbag: https://pypi.org/project/pygbag/
 - Published on [itch.io](https://fovnull.itch.io/red-envelope).   
 - [Publish manual](https://pygame-web.github.io/wiki/pygbag/itch.io/)
