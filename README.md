@@ -9,6 +9,10 @@
 # [抢红包](./red_envelope/)
 <img src=qrcode_fovnull.itch.io_red.png  width=200>
 
+# Tips
+需要将platform.window.MM.UME设置为True，才能全平台游戏自启动
+Ref: [issue#1](https://github.com/FoVNull/minigames_repo/issues/1)
+
 # Reference
 Code with ![](https://img.shields.io/badge/chatGPT-74aa9c?logo=openai&logoColor=white)
 - Chinese font: [Noto+Sans+SC](https://fonts.google.com/noto/specimen/Noto+Sans+SC)
