@@ -185,20 +185,37 @@ async def main():
         if intro_flag:
             # Clear the screen
             screen.fill(WHITE)
-            
+
             screen.blit(
-                pygame.font.Font(font_path, 38).render(''.join(answer), True, BLACK), (20, 80)
+                pygame.font.Font(font_path, 38).render("中国新年の挨拶を学ぼう", True, BLACK), (15, 50)
             )
             screen.blit(
-                pygame.font.Font(font_path, 14).render(pronunciation, True, BLACK), (25, 60)
+                pygame.font.Font(font_path, 12).render(pronunciation, True, BLACK), (35, 155)
+            )
+            screen.blit(
+                pygame.font.Font(font_path, 28).render(''.join(answer), True, BLACK), (40, 170)
             )
             for i, line in enumerate(text_lines):
                 screen.blit(
-                    pygame.font.Font(font_path, 16).render(line, True, BLACK), (20, 200+30*i)
+                    pygame.font.Font(font_path, 16).render(line, True, BLACK), (20, 230+30*i)
                 )
+            
+            image_path = "static/facai" if seed == 0 else "static/ruyi"
+            
+            info_image = pygame.image.load(f"{image_path}1.jpg")
+            info_image_rect = info_image.get_rect()
+            info_image_rect.x = 55
+            info_image_rect.y = 420
+            screen.blit(info_image, info_image_rect)
+
+            info_image1 = pygame.image.load(f"{image_path}2.jpg")
+            info_image_rect1 = info_image1.get_rect()
+            info_image_rect1.x = 255
+            info_image_rect1.y = 420
+            screen.blit(info_image1, info_image_rect1)
 
             button_width, button_height = 200, 50
-            button_position = (150, 500)
+            button_position = (150, 650)
             button_radius = 10
             button_text = "問題へGO"
 
