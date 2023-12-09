@@ -11,7 +11,6 @@ async def main():
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     RED = (220,20,60)  # Red background color
-    GREEN = (0,255,127)
 
     # Set screen dimensions and title
     screen_width, screen_height = 500, 800
@@ -34,7 +33,7 @@ async def main():
     success_image_rect = success_image.get_rect()
     success_image_rect.x = 25
     success_image_rect.y = 100
-    text_lines = ["中国文化圏の旧正月は、『恭喜發財』と言って挨拶します。", 
+    text_lines = ["旧正月は、『恭喜發財』と言って挨拶します。", 
                     "これは、元々『お金がたまりますように　とか　一攫千金』",
                     "のような意味がありましたが、"
                     "今は旧正月の挨拶として使います。",
@@ -82,13 +81,13 @@ async def main():
                         chinese_characters = ["塨", "禧", "沷", "材", "恭", "喜", "发", "财", "囍", "运", "發", "財"]
                         answer =  ["恭", "喜", "发", "财"]
                         pronunciation = "コーシーファアツァイ"
-                        question_text = pygame.font.Font(font_path, 16).render("「お金がたまりますように」の中国語はなんでしょう？", True, BLACK)
+                        question_text = pygame.font.Font(font_path, 16).render("「お金がたまりますように」を表する挨拶はなんでしょう？", True, BLACK)
                         random.shuffle(chinese_characters)
                         success_image = pygame.image.load("static/facai.jpg")
                         success_image_rect = success_image.get_rect()
                         success_image_rect.x = 25
                         success_image_rect.y = 100
-                        text_lines = ["中国文化圏の旧正月は、『恭喜發財』と言って挨拶します。", 
+                        text_lines = ["旧正月は、『恭喜發財』と言って挨拶します。", 
                             "これは、元々『お金がたまりますように　とか　一攫千金』",
                             "のような意味がありましたが、"
                             "今は旧正月の挨拶として使います。",
@@ -99,7 +98,7 @@ async def main():
                         chinese_characters = ["万", "事", "如", "意", "方", "倳", "夷", "姑", "萬", "噫", "女", "癔"]
                         answer =  ["万", "事", "如", "意"]
                         pronunciation = "ばんじにょい"
-                        question_text = pygame.font.Font(font_path, 12).render("「全て何もかもが思い通りになりますように」の中国語はなんでしょう？", True, BLACK)
+                        question_text = pygame.font.Font(font_path, 12).render("「全て何もかもが思い通りになりますように」を表する挨拶はなんでしょう？", True, BLACK)
                         random.shuffle(chinese_characters)
                         success_image = pygame.image.load("static/ruyi.gif")
                         success_image_rect = success_image.get_rect()
@@ -151,13 +150,13 @@ async def main():
             else:
                 # Draw the red background
                 pygame.draw.rect(screen, RED,
-                                (grid_positions[i][0] - font_size*0.5, grid_positions[i][1] - font_size*0.45, font_size, font_size), border_radius=10)
+                                (grid_positions[i][0] - font_size*0.5, grid_positions[i][1] - font_size*0.45, font_size*1.04, font_size*1.04), border_radius=10)
                 # Display the Chinese character
                 text = font.render(chinese_characters[i], True, BLACK)
             text_rect = text.get_rect(center=grid_positions[i])
             screen.blit(text, text_rect)
 
-        question_title = pygame.font.Font(font_path, 28).render("正しい旧正月の挨拶を選べよう", True, BLACK)
+        question_title = pygame.font.Font(font_path, 28).render("正しい漢字を選べよう", True, BLACK)
         screen.blit(question_title, (20, 40))
         screen.blit(question_text, (25, 100))
 
@@ -171,9 +170,11 @@ async def main():
             candidate_text = candidate_characters[i] if len(candidate_characters) > i else ""
             # Draw the red background
             if candidate_text:
-                pygame.draw.rect(screen, RED, (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1] - font_size*0.45, font_size, font_size))
+                pygame.draw.rect(screen, RED,
+                (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1] - font_size*0.45, font_size, font_size), border_radius=10)
             else:
-                pygame.draw.rect(screen, WHITE, (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1] - font_size*0.45, font_size, font_size))
+                pygame.draw.rect(screen, WHITE, 
+                                (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1] - font_size*0.45, font_size*1.04, font_size*1.04))
             text = font.render(candidate_text, True, BLACK)
             text_rect = text.get_rect(center=candidate_positions[i])
             screen.blit(text, text_rect)
@@ -196,7 +197,7 @@ async def main():
             button_width, button_height = 200, 50
             button_position = (150, 500)
             button_radius = 10
-            button_text = "Tap to GO!"
+            button_text = "問題にGO"
 
             pygame.draw.rect(screen, RED, (button_position[0], button_position[1], button_width, button_height), border_radius=button_radius)
             button_surface = pygame.font.Font(font_path, 24).render(button_text, True, WHITE)
