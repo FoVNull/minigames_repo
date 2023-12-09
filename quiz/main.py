@@ -113,7 +113,9 @@ async def main():
                             "簡体字は「万事如意」と書きます。"]
 
                 elif intro_flag:
-                    intro_flag = False
+                    x, y = event.pos
+                    if button_rect.collidepoint(x, y):
+                        intro_flag = False
                 else:
                     # Get the mouse click position
                     x, y = event.pos
@@ -197,10 +199,10 @@ async def main():
             button_text = "Tap to GO!"
 
             pygame.draw.rect(screen, RED, (button_position[0], button_position[1], button_width, button_height), border_radius=button_radius)
-            text_surface = pygame.font.Font(font_path, 24).render(button_text, True, WHITE)
-            text_rect = text_surface.get_rect(center=(button_position[0] + button_width // 2, button_position[1] + button_height // 2))
+            button_surface = pygame.font.Font(font_path, 24).render(button_text, True, WHITE)
+            button_rect = button_surface.get_rect(center=(button_position[0] + button_width // 2, button_position[1] + button_height // 2))
 
-            screen.blit(text_surface, text_rect)
+            screen.blit(button_surface, button_rect)
 
         # Update the screen
         pygame.display.flip()
