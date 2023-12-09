@@ -9,6 +9,7 @@ pygame.init()
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (220,20,60)  # Red background color
+GRAY = (105,105,105)
 
 # Set screen dimensions and title
 screen_width, screen_height = 500, 800
@@ -25,7 +26,7 @@ seed = 0
 chinese_characters = ["塨", "禧", "沷", "材", "恭", "喜", "发", "财", "囍", "运", "發", "財"]
 answer =  ["恭", "喜", "发", "财"]
 pronunciation = "コーシーファアツァイ"
-question_text = pygame.font.Font(font_path, 16).render("「お金がたまりますように」の中国語はなんでしょう？", True, BLACK)
+question_text = pygame.font.Font(font_path, 16).render("「お金がたまりますように」を表する挨拶はなんでしょう？", True, BLACK)
 random.shuffle(chinese_characters)
 success_image = pygame.image.load("static/facai.jpg")
 success_image_rect = success_image.get_rect()
@@ -143,12 +144,12 @@ while True:
     for i in range(len(chinese_characters)):
         if chinese_characters[i] in candidate_characters:
             pygame.draw.rect(screen, WHITE,
-                (grid_positions[i][0] - font_size*0.5, grid_positions[i][1] - font_size*0.45, font_size, font_size))
+                (grid_positions[i][0] - font_size*0.5, grid_positions[i][1] - font_size*0.45, font_size*1.04, font_size*1.04))
             text = font.render(chinese_characters[i], True, WHITE)
         else:
             # Draw the red background
             pygame.draw.rect(screen, RED,
-                            (grid_positions[i][0] - font_size*0.5, grid_positions[i][1] - font_size*0.45, font_size*1.04, font_size*1.04), border_radius=10)
+            (grid_positions[i][0] - font_size*0.5, grid_positions[i][1] - font_size*0.45, font_size*1.04, font_size*1.04), border_radius=10)
             # Display the Chinese character
             text = font.render(chinese_characters[i], True, BLACK)
         text_rect = text.get_rect(center=grid_positions[i])
@@ -164,15 +165,17 @@ while True:
         screen.blit(success_image, success_image_rect)
     
     for i in range(len(candidate_positions)):
-        
+        if not finish_flag:
+            pygame.draw.rect(screen, GRAY,
+                (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1]+50, font_size*1.04, 5))
         candidate_text = candidate_characters[i] if len(candidate_characters) > i else ""
         # Draw the red background
         if candidate_text:
             pygame.draw.rect(screen, RED,
-            (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1] - font_size*0.45, font_size, font_size), border_radius=10)
+            (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1] - font_size*0.45, font_size*1.04, font_size*1.04), border_radius=10)
         else:
             pygame.draw.rect(screen, WHITE, 
-                             (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1] - font_size*0.45, font_size*1.04, font_size*1.04))
+            (candidate_positions[i][0] - font_size*0.5, candidate_positions[i][1] - font_size*0.45, font_size*1.04, font_size*1.04))
         text = font.render(candidate_text, True, BLACK)
         text_rect = text.get_rect(center=candidate_positions[i])
         screen.blit(text, text_rect)
@@ -195,7 +198,7 @@ while True:
         button_width, button_height = 200, 50
         button_position = (150, 500)
         button_radius = 10
-        button_text = "問題にGO"
+        button_text = "問題へGO"
 
         pygame.draw.rect(screen, RED, (button_position[0], button_position[1], button_width, button_height), border_radius=button_radius)
         button_surface = pygame.font.Font(font_path, 24).render(button_text, True, WHITE)
