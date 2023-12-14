@@ -39,6 +39,14 @@ text_lines = ["旧正月は、『恭喜發財』と言って挨拶します。",
                 "恭喜 → おめでとう！ 發財 → お金が儲かりますように！",
                 "簡体字は「恭喜发财」と書きます。"]
 
+# Initialize fail
+show_fail_image = False
+show_fail_image_timer = None
+fail_image = pygame.image.load("static/fail.png")
+fail_image_rect = success_image.get_rect()
+fail_image_rect.x = 200
+fail_image_rect.y = 450
+
 # Set the distance between characters
 char_distance = 10
 
@@ -74,10 +82,10 @@ while True:
                 intro_flag = True
                 text_success = None
 
-                # seed = random.randint(0, 1)
-                seed = seed + 1 if seed < 1 else 0
+                seed = random.randint(0, 3)
+                # seed = seed + 1 if seed < 3 else 0
                 if seed == 0:
-                    chinese_characters = ["塨", "禧", "沷", "材", "恭", "喜", "发", "财", "囍", "运", "發", "財"]
+                    chinese_characters = ["塨", "禧", "沷", "材", "恭", "喜", "发", "财", "囍", "运", "金", "祝"]
                     answer =  ["恭", "喜", "发", "财"]
                     pronunciation = "コーシーファアツァイ"
                     question_text = pygame.font.Font(font_path, 16).render("「お金がたまりますように」を表する挨拶はなんでしょう？", True, BLACK)
@@ -92,9 +100,8 @@ while True:
                         "今は旧正月の挨拶として使います。",
                         "恭喜 → おめでとう！ 發財 → お金が儲かりますように！",
                         "簡体字は「恭喜发财」と書きます。"]
-
                 elif seed == 1:
-                    chinese_characters = ["万", "事", "如", "意", "方", "倳", "夷", "姑", "萬", "噫", "女", "癔"]
+                    chinese_characters = ["万", "事", "如", "意", "方", "倳", "夷", "姑", "友", "噫", "女", "癔"]
                     answer =  ["万", "事", "如", "意"]
                     pronunciation = "ばんじにょい"
                     question_text = pygame.font.Font(font_path, 12).render("「全て何もかもが思い通りになりますように」を表する挨拶はなんでしょう？", True, BLACK)
@@ -109,6 +116,34 @@ while True:
                         "思い通りにうまく事が進むことを表す「如意」",
                         "を組み合わせてできた言葉になります。",
                         "簡体字は「万事如意」と書きます。"]
+                elif seed == 2:
+                    chinese_characters = ["心", "想", "事", "成", "态", "相", "戍" , "堇", "咸", "怂", "感", "盛"]
+                    answer =  ["心", "想", "事", "成"]
+                    pronunciation = "しんそうじせい"
+                    question_text = pygame.font.Font(font_path, 16).render("「願いがすべて叶いますように」を表する挨拶はなんでしょう？", True, BLACK)
+                    random.shuffle(chinese_characters)
+                    success_image = pygame.image.load("static/xinxiang.jpg")
+                    success_image_rect = success_image.get_rect()
+                    success_image_rect.x = 50
+                    success_image_rect.y = 100
+                    text_lines = ["中国では正月などお祝いをする時に使われています", 
+                        "『心で願ったことが全てかなう』の意味です",
+                        "万事如意（ばんじにょい）と一緒に使うことが多いです"
+                        ]
+                elif seed == 3:
+                    chinese_characters = ["笼", "尤", "详", "样", "羊", "舌", "五", "韦", "龙", "年", "吉", "祥"]
+                    answer =  ["龙", "年", "吉", "祥"]
+                    pronunciation = "りゅうねんきちじょう"
+                    question_text = pygame.font.Font(font_path, 16).render("「龍年で幸せになるように」を表する挨拶はなんでしょう？", True, BLACK)
+                    random.shuffle(chinese_characters)
+                    success_image = pygame.image.load("static/jixiang.gif")
+                    success_image_rect = success_image.get_rect()
+                    success_image_rect.x = 50
+                    success_image_rect.y = 100
+                    text_lines = ["「十二支+吉祥」 は旧正月の時によく使われています挨拶です", 
+                        "2024年は日本では辰年ですが、中国では龍年と呼ばれます。",
+                        "簡体字は「龙年吉祥」と書きます。"
+                        ]
 
             elif intro_flag:
                 x, y = event.pos
@@ -136,6 +171,8 @@ while True:
                             random.shuffle(chinese_characters)
                             # Clear the candidate area if it exceeds 4 characters
                             candidate_characters = []
+                            show_fail_image = True
+                            show_fail_image_timer = pygame.time.get_ticks() + 1000
 
     # Clear the screen
     screen.fill(WHITE)
@@ -187,9 +224,14 @@ while True:
         screen.blit(
             pygame.font.Font(font_path, 38).render("中国新年の挨拶を学ぼう", True, BLACK), (15, 50)
         )
-        screen.blit(
-            pygame.font.Font(font_path, 12).render(pronunciation, True, BLACK), (35, 155)
-        )
+        if seed == 0 or seed == 3:
+            screen.blit(
+                pygame.font.Font(font_path, 12).render(pronunciation, True, BLACK), (35, 155)
+            )
+        else:
+            screen.blit(
+                pygame.font.Font(font_path, 12).render(pronunciation, True, BLACK), (50, 155)
+            )
         screen.blit(
             pygame.font.Font(font_path, 28).render(''.join(answer), True, BLACK), (40, 170)
         )
@@ -198,18 +240,25 @@ while True:
                 pygame.font.Font(font_path, 16).render(line, True, BLACK), (20, 230+30*i)
             )
         
-        image_path = "static/facai" if seed == 0 else "static/ruyi"
+        if seed == 0:
+            image_path = "static/facai" 
+        elif seed == 1:
+            image_path = "static/ruyi"
+        elif seed == 2:
+            image_path = "static/xinxiang"
+        else:
+            image_path = "static/jixiang"
         
         info_image = pygame.image.load(f"{image_path}1.jpg")
         info_image_rect = info_image.get_rect()
         info_image_rect.x = 55
-        info_image_rect.y = 420
+        info_image_rect.y = 420 if seed < 2 else 350
         screen.blit(info_image, info_image_rect)
 
         info_image1 = pygame.image.load(f"{image_path}2.jpg")
         info_image_rect1 = info_image1.get_rect()
         info_image_rect1.x = 255
-        info_image_rect1.y = 420
+        info_image_rect1.y = 420 if seed < 2 else 350
         screen.blit(info_image1, info_image_rect1)
 
         button_width, button_height = 200, 50
@@ -222,6 +271,12 @@ while True:
         button_rect = button_surface.get_rect(center=(button_position[0] + button_width // 2, button_position[1] + button_height // 2))
 
         screen.blit(button_surface, button_rect)
+    
+    if show_fail_image:
+        screen.blit(fail_image, fail_image_rect)
+        current_time = pygame.time.get_ticks()
+        if current_time > show_fail_image_timer:
+            show_fail_image = False
 
     # Update the screen
     pygame.display.flip()
